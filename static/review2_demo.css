@@ -499,6 +499,7 @@ canvas#graph-canvas {
   .two-col-grid {
     grid-template-columns: 1fr;
   }
+
   .meta-table-grid {
     grid-template-columns: 1fr;
   }
@@ -513,6 +514,7 @@ canvas#graph-canvas {
   border: 1px solid var(--accent-blue);
   color: var(--accent-blue);
 }
+
 .btn-outline:hover {
   background-color: rgba(37, 99, 235, 0.08);
 }
@@ -683,6 +685,7 @@ canvas#graph-canvas {
 
 /* Table Styling */
 .data-table {
+  display: none !important;
   width: 100%;
   border-collapse: collapse;
   font-size: 11.5px;
@@ -797,3 +800,66 @@ canvas#graph-canvas {
   margin-right: 4px;
 }
 
+/* ========================================================================== */
+/* 2x2 Detector Grid for Final Four Detectors (Stages 8-11)                   */
+/* ========================================================================== */
+.detectors-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.detectors-grid .detector-card,
+.detectors-grid .card,
+#card-ocsvm,
+#card-iforest,
+#card-hbos,
+#card-inne {
+  margin-bottom: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.detectors-grid .detector-card .graph-wrapper,
+.detectors-grid .card .graph-wrapper,
+#card-ocsvm .graph-wrapper,
+#card-iforest .graph-wrapper,
+#card-hbos .graph-wrapper,
+#card-inne .graph-wrapper {
+  margin-top: auto;
+}
+
+.detectors-grid .meta-table-grid,
+#card-ocsvm .meta-table-grid,
+#card-iforest .meta-table-grid,
+#card-hbos .meta-table-grid,
+#card-inne .meta-table-grid {
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 6px 10px;
+  padding: 8px 10px;
+}
+
+.detectors-grid .ocsvm-metrics-grid,
+#card-ocsvm .ocsvm-metrics-grid,
+#card-iforest .ocsvm-metrics-grid,
+#card-hbos .ocsvm-metrics-grid,
+#card-inne .ocsvm-metrics-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  margin: 8px 0 10px 0;
+}
+
+.detectors-grid .metric-card,
+#card-ocsvm .metric-card,
+#card-iforest .metric-card,
+#card-hbos .metric-card,
+#card-inne .metric-card {
+  padding: 8px 10px;
+}
+
+@media (max-width: 900px) {
+  .detectors-grid {
+    grid-template-columns: 1fr;
+  }
+}

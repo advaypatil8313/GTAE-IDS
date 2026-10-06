@@ -170,14 +170,7 @@ function resetSnapshotView(idx) {
   const inneTooltip = document.getElementById("inne-tooltip");
   if (inneTooltip) inneTooltip.style.display = "none";
 
-  const tbody = document.getElementById("tbody-detected-flows");
-  if (tbody) tbody.innerHTML = `<tr><td colspan="9" style="text-align: center; padding: 20px; color: var(--text-muted);">Snapshot ${idx} selected. Click "Process Snapshot" to run GTAE and OCSVM detection.</td></tr>`;
-  const iforestTbody = document.getElementById("tbody-iforest-flows");
-  if (iforestTbody) iforestTbody.innerHTML = `<tr><td colspan="9" style="text-align: center; padding: 20px; color: var(--text-muted);">Snapshot ${idx} selected. Click "Process Snapshot" to run GTAE and Isolation Forest detection.</td></tr>`;
-  const hbosTbody = document.getElementById("tbody-hbos-flows");
-  if (hbosTbody) hbosTbody.innerHTML = `<tr><td colspan="9" style="text-align: center; padding: 20px; color: var(--text-muted);">Snapshot ${idx} selected. Click "Process Snapshot" to run GTAE and HBOS detection.</td></tr>`;
-  const inneTbody = document.getElementById("tbody-inne-flows");
-  if (inneTbody) inneTbody.innerHTML = `<tr><td colspan="9" style="text-align: center; padding: 20px; color: var(--text-muted);">Snapshot ${idx} selected. Click "Process Snapshot" to run GTAE and INNE detection.</td></tr>`;
+
 }
 
 function updateStatus(message, type = "ready") {
@@ -1163,8 +1156,7 @@ function renderOCSVMDecisionBoundary(canvasId, boundaryData) {
 }
 
 function renderOCSVMSnapshotFlowsTable(tbodyId, flowsList) {
-  const tbody = document.getElementById(tbodyId);
-  if (!tbody || !flowsList) return;
+  return;
 
   if (flowsList.length === 0) {
     tbody.innerHTML = `<tr><td colspan="9" style="text-align: center; padding: 20px; color: var(--text-muted);">No flows found for this snapshot.</td></tr>`;
@@ -1469,8 +1461,7 @@ function renderIForestPCAScatter(canvasId, pcaData) {
 }
 
 function renderIForestSnapshotFlowsTable(tbodyId, flowsList) {
-  const tbody = document.getElementById(tbodyId);
-  if (!tbody || !flowsList) return;
+  return;
 
   if (flowsList.length === 0) {
     tbody.innerHTML = `<tr><td colspan="9" style="text-align: center; padding: 20px; color: var(--text-muted);">No flows found for this snapshot.</td></tr>`;
@@ -1786,8 +1777,7 @@ function renderHBOSScoreHistogram(canvasId, histData) {
 }
 
 function renderHBOSSnapshotFlowsTable(tbodyId, flowsList) {
-  const tbody = document.getElementById(tbodyId);
-  if (!tbody || !flowsList) return;
+  return;
 
   if (flowsList.length === 0) {
     tbody.innerHTML = `<tr><td colspan="9" style="text-align: center; padding: 20px; color: var(--text-muted);">No flows found for this snapshot.</td></tr>`;
@@ -2092,8 +2082,7 @@ function renderINNEPCAScatter(canvasId, pcaData) {
 }
 
 function renderINNESnapshotFlowsTable(tbodyId, flowsList) {
-  const tbody = document.getElementById(tbodyId);
-  if (!tbody || !flowsList) return;
+  return;
 
   if (flowsList.length === 0) {
     tbody.innerHTML = `<tr><td colspan="9" style="text-align: center; padding: 20px; color: var(--text-muted);">No flows found for this snapshot.</td></tr>`;

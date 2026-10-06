@@ -38,6 +38,7 @@ logging.basicConfig(
 logger = logging.getLogger("GTAE_IDS_WebApp")
 
 app = Flask(__name__)
+app.config["TEMPLATES_AUTO_RELOAD"] = True
 
 # Paths to verified artifacts
 SNAPSHOTS_PATH = PROJECT_ROOT / "data/processed/graphs/temporal_graph_snapshots.pt"

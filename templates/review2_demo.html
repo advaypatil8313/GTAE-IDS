@@ -575,8 +575,11 @@
         </div>
       </section>
 
-      <!-- SECTION 8: OCSVM -->
-      <section class="card span-full" id="card-ocsvm">
+      <!-- 2x2 DETECTOR GRID: OCSVM, Isolation Forest, HBOS, INNE -->
+      <div class="detectors-grid two-col-grid">
+
+        <!-- SECTION 8: OCSVM -->
+        <section class="card detector-card" id="card-ocsvm">
         <div class="card-header">
           <div class="card-title-group">
             <span class="shape-indicator">STAGE 8</span>
@@ -614,23 +617,10 @@
             <div id="boundary-tooltip" class="tooltip"></div>
           </div>
         </div>
-
-        <div style="margin-top:20px;">
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>Rank</th><th>Edge ID</th><th>Src IP</th><th>Dst IP</th><th>Timestamp</th><th>Recon Error</th><th>Anomaly Score</th><th>Truth</th><th>Status</th>
-              </tr>
-            </thead>
-            <tbody id="tbody-detected-flows">
-              <tr><td colspan="9">Select a snapshot to process.</td></tr>
-            </tbody>
-          </table>
-        </div>
       </section>
 
-      <!-- SECTION 9: Isolation Forest -->
-      <section class="card span-full" id="card-iforest">
+        <!-- SECTION 9: Isolation Forest -->
+        <section class="card detector-card" id="card-iforest">
         <div class="card-header">
           <div class="card-title-group">
             <span class="shape-indicator">STAGE 9</span>
@@ -669,23 +659,10 @@
             <div id="iforest-tooltip" class="tooltip"></div>
           </div>
         </div>
-
-        <div style="margin-top:20px;">
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>Rank</th><th>Edge ID</th><th>Src IP</th><th>Dst IP</th><th>Timestamp</th><th>Recon Error</th><th>Anomaly Score</th><th>Truth</th><th>Status</th>
-              </tr>
-            </thead>
-            <tbody id="tbody-iforest-flows">
-              <tr><td colspan="9">Select a snapshot to process.</td></tr>
-            </tbody>
-          </table>
-        </div>
       </section>
 
-      <!-- SECTION 10: HBOS -->
-      <section class="card span-full" id="card-hbos">
+        <!-- SECTION 10: HBOS -->
+        <section class="card detector-card" id="card-hbos">
         <div class="card-header">
           <div class="card-title-group">
             <span class="shape-indicator">STAGE 10</span>
@@ -723,23 +700,10 @@
             <div id="hbos-tooltip" class="tooltip"></div>
           </div>
         </div>
-
-        <div style="margin-top:20px;">
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>Rank</th><th>Edge ID</th><th>Src IP</th><th>Dst IP</th><th>Timestamp</th><th>Recon Error</th><th>Anomaly Score</th><th>Truth</th><th>Status</th>
-              </tr>
-            </thead>
-            <tbody id="tbody-hbos-flows">
-              <tr><td colspan="9">Select a snapshot to process.</td></tr>
-            </tbody>
-          </table>
-        </div>
       </section>
 
-      <!-- SECTION 11: INNE -->
-      <section class="card span-full" id="card-inne">
+        <!-- SECTION 11: INNE -->
+        <section class="card detector-card" id="card-inne">
         <div class="card-header">
           <div class="card-title-group">
             <span class="shape-indicator">STAGE 11</span>
@@ -778,22 +742,8 @@
             <div id="inne-tooltip" class="tooltip"></div>
           </div>
         </div>
-
-
-
-        <div style="margin-top:20px;">
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>Rank</th><th>Edge ID</th><th>Src IP</th><th>Dst IP</th><th>Timestamp</th><th>Recon Error</th><th>Anomaly Score</th><th>Truth</th><th>Status</th>
-              </tr>
-            </thead>
-            <tbody id="tbody-inne-flows">
-              <tr><td colspan="9">Select a snapshot to process.</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
+        </section>
+      </div> <!-- /.detectors-grid -->
 
     </main>
 
