@@ -14,6 +14,8 @@ let state = {
   currentIForestSplit: "test",
   hbosData: null,
   currentHBOSSplit: "test",
+  inneData: null,
+  currentINNESplit: "test",
 };
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -78,6 +80,7 @@ function resetSnapshotView(idx) {
   state.ocsvmData = null;
   state.iforestData = null;
   state.hbosData = null;
+  state.inneData = null;
 
   resetPipelineSteps();
 
@@ -126,6 +129,21 @@ function resetSnapshotView(idx) {
     if (el) el.textContent = "-";
   });
 
+  const inneProvBadge = document.getElementById("badge-inne-provenance");
+  if (inneProvBadge) inneProvBadge.textContent = `Snapshot ${idx} (Awaiting GTAE execution...)`;
+  const inneSnapSummaryIdx = document.getElementById("summary-inne-snap-idx");
+  if (inneSnapSummaryIdx) inneSnapSummaryIdx.textContent = idx;
+
+  ["summary-inne-total-flows", "summary-inne-benign-flows", "summary-inne-attack-flows", "summary-inne-detected-flows", "summary-inne-tp", "summary-inne-fp"].forEach((id) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = "-";
+  });
+
+  ["val-inne-prec", "val-inne-rec", "val-inne-f1", "val-inne-fpr"].forEach((id) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = "-";
+  });
+
   const hbosProvBadge = document.getElementById("badge-hbos-provenance");
   if (hbosProvBadge) hbosProvBadge.textContent = `Snapshot ${idx} (Awaiting GTAE execution...)`;
   const hbosSnapSummaryIdx = document.getElementById("summary-hbos-snap-idx");
@@ -141,7 +159,7 @@ function resetSnapshotView(idx) {
     if (el) el.textContent = "-";
   });
 
-  ["graph-canvas", "latent-canvas", "recon-canvas-orig", "recon-canvas-pred", "hist-canvas", "features-canvas", "ocsvm-boundary-canvas", "iforest-pca-canvas", "hbos-hist-canvas"].forEach(clearCanvas);
+  ["graph-canvas", "latent-canvas", "recon-canvas-orig", "recon-canvas-pred", "hist-canvas", "features-canvas", "ocsvm-boundary-canvas", "iforest-pca-canvas", "hbos-hist-canvas", "inne-pca-canvas"].forEach(clearCanvas);
 
   const tooltip = document.getElementById("boundary-tooltip");
   if (tooltip) tooltip.style.display = "none";
@@ -149,6 +167,8 @@ function resetSnapshotView(idx) {
   if (iforestTooltip) iforestTooltip.style.display = "none";
   const hbosTooltip = document.getElementById("hbos-tooltip");
   if (hbosTooltip) hbosTooltip.style.display = "none";
+  const inneTooltip = document.getElementById("inne-tooltip");
+  if (inneTooltip) inneTooltip.style.display = "none";
 
   const tbody = document.getElementById("tbody-detected-flows");
   if (tbody) tbody.innerHTML = `<tr><td colspan="9" style="text-align: center; padding: 20px; color: var(--text-muted);">Snapshot ${idx} selected. Click "Process Snapshot" to run GTAE and OCSVM detection.</td></tr>`;
@@ -156,6 +176,8 @@ function resetSnapshotView(idx) {
   if (iforestTbody) iforestTbody.innerHTML = `<tr><td colspan="9" style="text-align: center; padding: 20px; color: var(--text-muted);">Snapshot ${idx} selected. Click "Process Snapshot" to run GTAE and Isolation Forest detection.</td></tr>`;
   const hbosTbody = document.getElementById("tbody-hbos-flows");
   if (hbosTbody) hbosTbody.innerHTML = `<tr><td colspan="9" style="text-align: center; padding: 20px; color: var(--text-muted);">Snapshot ${idx} selected. Click "Process Snapshot" to run GTAE and HBOS detection.</td></tr>`;
+  const inneTbody = document.getElementById("tbody-inne-flows");
+  if (inneTbody) inneTbody.innerHTML = `<tr><td colspan="9" style="text-align: center; padding: 20px; color: var(--text-muted);">Snapshot ${idx} selected. Click "Process Snapshot" to run GTAE and INNE detection.</td></tr>`;
 }
 
 function updateStatus(message, type = "ready") {
@@ -176,7 +198,7 @@ function setPipelineStep(stepId, status) {
 }
 
 function resetPipelineSteps() {
-  ["step-lspr23", "step-graph", "step-gtae", "step-latent", "step-recon", "step-error", "step-features", "step-ocsvm", "step-iforest", "step-hbos"].forEach((s) => setPipelineStep(s, null));
+  ["step-lspr23", "step-graph", "step-gtae", "step-latent", "step-recon", "step-error", "step-features", "step-ocsvm", "step-iforest", "step-hbos", "step-inne"].forEach((s) => setPipelineStep(s, null));
 }
 
 async function processSnapshot(snapshotIndex) {
@@ -256,8 +278,14 @@ async function processSnapshot(snapshotIndex) {
       setPipelineStep("step-hbos", "completed");
     }
 
+    if (res.inne) {
+      setPipelineStep("step-inne", "active");
+      renderINNESnapshot(res.inne);
+      setPipelineStep("step-inne", "completed");
+    }
+
     if (btnRun) btnRun.disabled = false;
-    updateStatus(`Snapshot ${snapshotIndex} processed successfully: GTAE 113-D features, OCSVM, IForest & HBOS ready.`, "ready");
+    updateStatus(`Snapshot ${snapshotIndex} processed successfully: GTAE 113-D features, OCSVM, IForest, HBOS & INNE ready.`, "ready");
   } catch (err) {
     console.error(`Error processing snapshot ${snapshotIndex}:`, err);
     updateStatus(`Error: ${err.message}`, "error");
@@ -365,6 +393,12 @@ async function runGTAE(snapshotIndex) {
       setPipelineStep("step-hbos", "active");
       renderHBOSSnapshot(data.hbos);
       setPipelineStep("step-hbos", "completed");
+    }
+
+    if (data.inne) {
+      setPipelineStep("step-inne", "active");
+      renderINNESnapshot(data.inne);
+      setPipelineStep("step-inne", "completed");
     }
 
     updateStatus(`Snapshot ${snapshotIndex} GTAE forward pass & detectors completed successfully on ${data.gpu_name}.`, "ready");
@@ -1778,3 +1812,545 @@ function renderHBOSSnapshotFlowsTable(tbodyId, flowsList) {
 
   tbody.innerHTML = rowsHtml;
 }
+
+
+// PHASE 4D: ISOLATION FOREST (IFOREST) CLIENT-SIDE DASHBOARD ENGINE
+// ============================================================================
+
+/**
+ * Render real-time INNE anomaly detection results for the currently selected snapshot.
+ */
+function renderINNESnapshot(inne) {
+  if (!inne) return;
+  state.inneData = inne;
+
+  // 1. Provenance & threshold badges
+  const provBadge = document.getElementById("badge-inne-provenance");
+  if (provBadge) {
+    provBadge.textContent = `Snapshot ${inne.snapshot_index} (Window ${inne.window_id} • ${inne.split_name})`;
+  }
+
+  const threshBadge = document.getElementById("badge-inne-thresh");
+  if (threshBadge) {
+    threshBadge.textContent = `τ* = ${inne.frozen_threshold.toFixed(4)} (99th pct benign)`;
+  }
+
+  // 2. Summary banner
+  const snapSummaryIdx = document.getElementById("summary-inne-snap-idx");
+  if (snapSummaryIdx) snapSummaryIdx.textContent = inne.snapshot_index;
+
+  const totalFlows = document.getElementById("summary-inne-total-flows");
+  if (totalFlows) totalFlows.textContent = inne.counts.total_flows.toLocaleString();
+
+  const benignFlows = document.getElementById("summary-inne-benign-flows");
+  if (benignFlows) benignFlows.textContent = inne.counts.benign_total.toLocaleString();
+
+  const attackFlows = document.getElementById("summary-inne-attack-flows");
+  if (attackFlows) attackFlows.textContent = inne.counts.attack_total.toLocaleString();
+
+  const detectedFlows = document.getElementById("summary-inne-detected-flows");
+  if (detectedFlows) detectedFlows.textContent = inne.counts.detected_anomalies.toLocaleString();
+
+  const tpEl = document.getElementById("summary-inne-tp");
+  if (tpEl) tpEl.textContent = inne.counts.true_positives.toLocaleString();
+
+  const fpEl = document.getElementById("summary-inne-fp");
+  if (fpEl) fpEl.textContent = inne.counts.false_positives.toLocaleString();
+
+  // 3. Four Important Metrics
+  const precEl = document.getElementById("val-inne-prec");
+  if (precEl) {
+    precEl.textContent = (inne.metrics.precision * 100).toFixed(2) + "%";
+  }
+
+  const recEl = document.getElementById("val-inne-rec");
+  if (recEl) {
+    recEl.textContent = (inne.metrics.recall * 100).toFixed(2) + "%";
+  }
+
+  const f1El = document.getElementById("val-inne-f1");
+  if (f1El) {
+    f1El.textContent = inne.metrics.f1_score.toFixed(4);
+  }
+
+  const fprEl = document.getElementById("val-inne-fpr");
+  if (fprEl) {
+    fprEl.textContent = (inne.metrics.false_positive_rate * 100).toFixed(2) + "%";
+  }
+
+  // 4. One Primary Graph: INNE Anomaly Visualization (2D PCA Projection)
+  renderINNEPCAScatter("inne-pca-canvas", inne.pca_visualization);
+
+  // 5. Flow detections table
+
+  renderINNESnapshotFlowsTable("tbody-inne-flows", inne.flows_table);
+}
+
+let inneHoverHandler = null;
+
+function setupINNETooltip(canvas, pcaData, toCanvasX, toCanvasY) {
+  const tooltip = document.getElementById("inne-tooltip");
+  if (!tooltip || !pcaData) return;
+
+  if (inneHoverHandler) {
+    canvas.removeEventListener("mousemove", inneHoverHandler);
+    canvas.removeEventListener("mouseleave", inneHoverHandler._leave);
+  }
+
+  const points = pcaData.flow_points || [];
+
+  const handleMouseMove = (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    const mouseX = (e.clientX - rect.left) * scaleX;
+    const mouseY = (e.clientY - rect.top) * scaleY;
+
+    let nearest = null;
+    let minDist = 14;
+
+    for (let pt of points) {
+      const cx = toCanvasX(pt.pc1);
+      const cy = toCanvasY(pt.pc2);
+      const dist = Math.hypot(mouseX - cx, mouseY - cy);
+      if (dist < minDist) {
+        minDist = dist;
+        nearest = pt;
+      }
+    }
+
+    if (nearest) {
+      const isTP = nearest.predicted === 1 && nearest.ground_truth === 1;
+      const isFP = nearest.predicted === 1 && nearest.ground_truth === 0;
+      const isFN = nearest.predicted === 0 && nearest.ground_truth === 1;
+
+      let statusBadge = isTP ? "True Positive" : (isFP ? "False Alarm" : (isFN ? "Missed Attack" : "Benign Inlier"));
+      let badgeColor = isTP ? "#16a34a" : (isFP ? "#dc2626" : (isFN ? "#d97706" : "#2563eb"));
+
+      tooltip.style.display = "block";
+      tooltip.style.left = `${(e.clientX - rect.left) + 12}px`;
+      tooltip.style.top = `${(e.clientY - rect.top) - 10}px`;
+      tooltip.innerHTML = `
+        <div style="font-weight: bold; margin-bottom: 2px;">Flow #${nearest.edge_idx}</div>
+        <div style="font-size: 10.5px; color: #475569;">${nearest.src} &rarr; ${nearest.dst}</div>
+        <div style="font-size: 10.5px; font-family: monospace; margin: 2px 0;">PC1: ${nearest.pc1.toFixed(3)}, PC2: ${nearest.pc2.toFixed(3)}</div>
+        <div style="font-size: 10.5px;">INNE Score: <strong>${nearest.anomaly_score.toFixed(4)}</strong> <span style="color:#64748b;">(τ*=${pcaData.frozen_threshold.toFixed(4)})</span></div>
+        <div style="font-size: 10.5px; margin-top: 2px;">Ground Truth: <strong>${nearest.ground_truth === 1 ? 'Malicious' : 'Benign'}</strong> | Pred: <strong style="color: ${badgeColor};">${statusBadge}</strong></div>
+      `;
+    } else {
+      tooltip.style.display = "none";
+    }
+  };
+
+  const handleMouseLeave = () => {
+    tooltip.style.display = "none";
+  };
+
+  handleMouseMove._leave = handleMouseLeave;
+  inneHoverHandler = handleMouseMove;
+  canvas.addEventListener("mousemove", handleMouseMove);
+  canvas.addEventListener("mouseleave", handleMouseLeave);
+}
+
+function renderINNEPCAScatter(canvasId, pcaData) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas || !pcaData) return;
+  const ctx = canvas.getContext("2d");
+  const width = canvas.width;
+  const height = canvas.height;
+  ctx.clearRect(0, 0, width, height);
+
+  // Update variance badge
+  const badgeVar = document.getElementById("badge-inne-pca-variance");
+  if (badgeVar && pcaData.pca_variance) {
+    badgeVar.textContent = `PC1: ${pcaData.pca_variance[0]}% | PC2: ${pcaData.pca_variance[1]}% Var`;
+  }
+
+  const [xMin, xMax] = pcaData.x_range;
+  const [yMin, yMax] = pcaData.y_range;
+  const rangeX = xMax - xMin || 1;
+  const rangeY = yMax - yMin || 1;
+
+  const padLeft = 60;
+  const padRight = 30;
+  const padTop = 32;
+  const padBottom = 42;
+  const chartW = width - padLeft - padRight;
+  const chartH = height - padTop - padBottom;
+
+  const toCanvasX = (x) => padLeft + ((x - xMin) / rangeX) * chartW;
+  const toCanvasY = (y) => padTop + chartH - ((y - yMin) / rangeY) * chartH;
+
+  // Background subtle canvas fill
+  ctx.fillStyle = "#fafbfc";
+  ctx.fillRect(padLeft, padTop, chartW, chartH);
+
+  // Box border
+  ctx.strokeStyle = "#e2e8f0";
+  ctx.lineWidth = 1;
+  ctx.strokeRect(padLeft, padTop, chartW, chartH);
+
+  // Horizontal grid lines & Y labels
+  for (let i = 0; i <= 4; i++) {
+    const yVal = yMin + (rangeY / 4) * i;
+    const cy = toCanvasY(yVal);
+    ctx.strokeStyle = "#f1f5f9";
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(padLeft, cy);
+    ctx.lineTo(padLeft + chartW, cy);
+    ctx.stroke();
+
+    ctx.fillStyle = "#64748b";
+    ctx.font = "9.5px monospace";
+    ctx.textAlign = "right";
+    ctx.fillText(yVal.toFixed(1), padLeft - 6, cy + 3);
+  }
+
+  // Vertical grid lines & X labels
+  for (let j = 0; j <= 5; j++) {
+    const xVal = xMin + (rangeX / 5) * j;
+    const cx = toCanvasX(xVal);
+    ctx.strokeStyle = "#f1f5f9";
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(cx, padTop);
+    ctx.lineTo(cx, padTop + chartH);
+    ctx.stroke();
+
+    ctx.fillStyle = "#64748b";
+    ctx.font = "9.5px monospace";
+    ctx.textAlign = "center";
+    ctx.fillText(xVal.toFixed(1), cx, padTop + chartH + 15);
+  }
+
+  // Axis Labels
+  ctx.fillStyle = "#334155";
+  ctx.font = "bold 10.5px sans-serif";
+  ctx.textAlign = "center";
+  const varX = pcaData.pca_variance ? pcaData.pca_variance[0] : 21.67;
+  const varY = pcaData.pca_variance ? pcaData.pca_variance[1] : 12.54;
+  ctx.fillText(`Principal Component 1 (${varX}% Explained Variance)`, padLeft + chartW / 2, height - 10);
+
+  ctx.save();
+  ctx.translate(16, padTop + chartH / 2);
+  ctx.rotate(-Math.PI / 2);
+  ctx.fillText(`Principal Component 2 (${varY}% Explained Variance)`, 0, 0);
+  ctx.restore();
+
+  // Watermark tag inside chart
+  ctx.fillStyle = "#065f46";
+  ctx.font = "bold 10px monospace";
+  ctx.textAlign = "right";
+  ctx.fillText(`INNE (100 Trees): τ* = ${pcaData.frozen_threshold.toFixed(4)}`, padLeft + chartW - 10, padTop + 18);
+
+  // Plot Flow Points
+  const points = pcaData.flow_points || [];
+  // Sort so attacks and predicted anomalies draw on top
+  const sortedPoints = [...points].sort((a, b) => {
+    return (a.predicted * 2 + a.ground_truth) - (b.predicted * 2 + b.ground_truth);
+  });
+
+  sortedPoints.forEach((pt) => {
+    const cx = toCanvasX(pt.pc1);
+    const cy = toCanvasY(pt.pc2);
+
+    if (cx < padLeft || cx > padLeft + chartW || cy < padTop || cy > padTop + chartH) {
+      return;
+    }
+
+    const isAttack = pt.ground_truth === 1;
+    const isAnomalyPred = pt.predicted === 1;
+    const radius = isAttack ? 4.5 : 4.0;
+
+    // Draw prediction halo ring if predicted anomalous
+    if (isAnomalyPred) {
+      ctx.strokeStyle = "#f59e0b"; // Golden amber ring
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.arc(cx, cy, radius + 3.5, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+
+    // Draw flow center dot
+    ctx.beginPath();
+    ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+    if (isAttack) {
+      ctx.fillStyle = "#dc2626"; // Crimson
+      ctx.strokeStyle = "#7f1d1d";
+    } else {
+      ctx.fillStyle = "#2563eb"; // Royal blue
+      ctx.strokeStyle = "#1e3a8a";
+    }
+    ctx.lineWidth = 1;
+    ctx.fill();
+    ctx.stroke();
+  });
+
+  // Attach interactive hover listener
+  setupINNETooltip(canvas, pcaData, toCanvasX, toCanvasY);
+}
+
+function renderINNESnapshotFlowsTable(tbodyId, flowsList) {
+  const tbody = document.getElementById(tbodyId);
+  if (!tbody || !flowsList) return;
+
+  if (flowsList.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="9" style="text-align: center; padding: 20px; color: var(--text-muted);">No flows found for this snapshot.</td></tr>`;
+    return;
+  }
+
+  const rowsHtml = flowsList.map((f) => {
+    return `
+      <tr>
+        <td style="font-weight: 600;">#${f.rank}</td>
+        <td style="font-family: monospace;">${f.edge_idx}</td>
+        <td>${f.src}</td>
+        <td>${f.dst}</td>
+        <td style="font-size: 11px;">${f.timestamp}</td>
+        <td style="font-family: monospace;">${f.recon_error.toFixed(4)}</td>
+        <td style="font-weight: 700; font-family: monospace; color: ${f.predicted === 1 ? '#dc2626' : '#2563eb'};">${f.anomaly_score.toFixed(4)}</td>
+        <td>${f.ground_truth_str}</td>
+        <td><span class="${f.badge_class}">${f.status_badge}</span></td>
+      </tr>
+    `;
+  }).join("");
+
+  tbody.innerHTML = rowsHtml;
+}
+
+
+
+// ============================================================================
+
+
+let inneHistHoverHandler = null;
+
+function setupINNEHistTooltip(canvas, histData, toCanvasX, chartW, chartH, padLeft, padTop) {
+  const tooltip = document.getElementById("inne-hist-tooltip");
+  if (!tooltip || !histData || !histData.bins) return;
+
+  if (inneHistHoverHandler) {
+    canvas.removeEventListener("mousemove", inneHistHoverHandler);
+    canvas.removeEventListener("mouseleave", inneHistHoverHandler._leave);
+  }
+
+  const bins = histData.bins;
+  const thresh = histData.frozen_threshold;
+
+  const handleMouseMove = (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    const mouseX = (e.clientX - rect.left) * scaleX;
+    const mouseY = (e.clientY - rect.top) * scaleY;
+
+    if (mouseX < padLeft || mouseX > padLeft + chartW || mouseY < padTop || mouseY > padTop + chartH) {
+      tooltip.style.display = "none";
+      return;
+    }
+
+    let foundBin = null;
+    for (let bi = 0; bi < bins.length; bi++) {
+      const b = bins[bi];
+      const x0 = toCanvasX(b.range[0]);
+      const x1 = toCanvasX(b.range[1]);
+      if (mouseX >= x0 && mouseX <= x1) {
+        foundBin = b;
+        break;
+      }
+    }
+
+    if (foundBin && foundBin.total_count > 0) {
+      const isAnomalyBin = foundBin.is_anomaly_region || foundBin.range[1] >= thresh;
+      const statusText = isAnomalyBin ? "Predicted Anomaly (s ≥ τ*)" : "Normal / Inlier (s < τ*)";
+      const statusColor = isAnomalyBin ? "#d97706" : "#2563eb";
+
+      tooltip.style.display = "block";
+      tooltip.style.left = `${(e.clientX - rect.left) + 12}px`;
+      tooltip.style.top = `${(e.clientY - rect.top) - 10}px`;
+      tooltip.innerHTML = `
+        <div style="font-weight: bold; margin-bottom: 2px;">INNE Score Range: [${foundBin.range[0].toFixed(2)} &ndash; ${foundBin.range[1].toFixed(2)}]</div>
+        <div style="font-size: 10.5px; color: #2563eb; margin: 1px 0;">&bull; Benign Flows: <strong>${foundBin.benign_count}</strong></div>
+        <div style="font-size: 10.5px; color: #dc2626; margin: 1px 0;">&bull; Attack Flows: <strong>${foundBin.attack_count}</strong></div>
+        <div style="font-size: 10.5px; margin-top: 2px;">Total in Bin: <strong>${foundBin.total_count}</strong></div>
+        <div style="font-size: 10.5px; margin-top: 3px; border-top: 1px solid #e2e8f0; padding-top: 2px;">
+          Region: <strong style="color: ${statusColor};">${statusText}</strong>
+        </div>
+      `;
+    } else {
+      tooltip.style.display = "none";
+    }
+  };
+
+  const handleMouseLeave = () => {
+    tooltip.style.display = "none";
+  };
+
+  handleMouseMove._leave = handleMouseLeave;
+  inneHistHoverHandler = handleMouseMove;
+  canvas.addEventListener("mousemove", handleMouseMove);
+  canvas.addEventListener("mouseleave", handleMouseLeave);
+}
+
+function renderINNEScoreHistogram(canvasId, histData) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas || !histData || !histData.bins) return;
+  const ctx = canvas.getContext("2d");
+  const width = canvas.width;
+  const height = canvas.height;
+  ctx.clearRect(0, 0, width, height);
+
+  const padLeft = 60;
+  const padRight = 40;
+  const padTop = 38;
+  const padBottom = 48;
+  const chartW = width - padLeft - padRight;
+  const chartH = height - padTop - padBottom;
+
+  const bins = histData.bins;
+  const numBins = bins.length;
+  const threshVal = histData.frozen_threshold;
+
+  const minX = histData.hist_min !== undefined ? histData.hist_min : histData.bin_edges[0];
+  const maxX = histData.hist_max !== undefined ? histData.hist_max : histData.bin_edges[histData.bin_edges.length - 1];
+  const rangeX = maxX - minX || 1;
+
+  const maxCount = Math.max(histData.max_bin_count || 1, 1);
+
+  const toCanvasX = (score) => padLeft + ((score - minX) / rangeX) * chartW;
+
+  ctx.fillStyle = "#fafbfc";
+  ctx.fillRect(padLeft, padTop, chartW, chartH);
+
+  // Anomaly Region Shading (s >= threshVal)
+  const threshX = toCanvasX(threshVal);
+  if (threshX < padLeft + chartW) {
+    const anomRegionX = Math.max(padLeft, threshX);
+    const anomRegionW = (padLeft + chartW) - anomRegionX;
+    ctx.fillStyle = "rgba(245, 158, 11, 0.08)";
+    ctx.fillRect(anomRegionX, padTop, anomRegionW, chartH);
+
+    ctx.fillStyle = "#b45309";
+    ctx.font = "bold 9.5px sans-serif";
+    ctx.textAlign = "right";
+    ctx.fillText("PREDICTED ANOMALY REGION (s ≥ τ*)", padLeft + chartW - 10, padTop + 16);
+  }
+
+  ctx.strokeStyle = "#e2e8f0";
+  ctx.lineWidth = 1;
+  ctx.strokeRect(padLeft, padTop, chartW, chartH);
+
+  const yTicks = 4;
+  for (let i = 0; i <= yTicks; i++) {
+    const countVal = Math.round((maxCount / yTicks) * i);
+    const cy = padTop + chartH - (i / yTicks) * chartH;
+
+    ctx.strokeStyle = "#f1f5f9";
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(padLeft, cy);
+    ctx.lineTo(padLeft + chartW, cy);
+    ctx.stroke();
+
+    ctx.fillStyle = "#64748b";
+    ctx.font = "9.5px monospace";
+    ctx.textAlign = "right";
+    ctx.fillText(countVal.toString(), padLeft - 8, cy + 3.5);
+  }
+
+  // Draw Stacked Histogram Bars (Benign Blue + Malicious Crimson Red)
+  bins.forEach((b) => {
+    const x0 = toCanvasX(b.range[0]);
+    const x1 = toCanvasX(b.range[1]);
+    const barWidth = Math.max(1, (x1 - x0) - 2);
+
+    const benignH = (b.benign_count / maxCount) * chartH;
+    const attackH = (b.attack_count / maxCount) * chartH;
+    const totalH = benignH + attackH;
+
+    const barX = x0 + 1;
+    const barBaseY = padTop + chartH;
+
+    if (benignH > 0) {
+      ctx.fillStyle = "#2563eb";
+      ctx.fillRect(barX, barBaseY - benignH, barWidth, benignH);
+    }
+
+    if (attackH > 0) {
+      ctx.fillStyle = "#dc2626";
+      ctx.fillRect(barX, barBaseY - benignH - attackH, barWidth, attackH);
+    }
+
+    if (b.is_anomaly_region && totalH > 0) {
+      ctx.strokeStyle = "#f59e0b";
+      ctx.lineWidth = 1.8;
+      ctx.strokeRect(barX, barBaseY - totalH, barWidth, totalH);
+
+      ctx.fillStyle = "#f59e0b";
+      ctx.fillRect(barX, barBaseY - totalH - 2, barWidth, 2);
+    }
+  });
+
+  // Vertical Threshold Line at τ* = 120.188180
+  if (threshX >= padLeft && threshX <= padLeft + chartW) {
+    ctx.setLineDash([5, 3]);
+    ctx.strokeStyle = "#d97706";
+    ctx.lineWidth = 2.2;
+    ctx.beginPath();
+    ctx.moveTo(threshX, padTop);
+    ctx.lineTo(threshX, padTop + chartH);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    ctx.fillStyle = "#d97706";
+    ctx.font = "bold 10px monospace";
+    ctx.textAlign = "center";
+    ctx.fillText(`τ* = ${threshVal.toFixed(4)}`, threshX, padTop - 8);
+
+    ctx.beginPath();
+    ctx.moveTo(threshX - 4, padTop - 4);
+    ctx.lineTo(threshX + 4, padTop - 4);
+    ctx.lineTo(threshX, padTop);
+    ctx.closePath();
+    ctx.fillStyle = "#d97706";
+    ctx.fill();
+  }
+
+  const numXTicks = 7;
+  for (let j = 0; j <= numXTicks; j++) {
+    const sVal = minX + (rangeX / numXTicks) * j;
+    const cx = toCanvasX(sVal);
+
+    ctx.strokeStyle = "#e2e8f0";
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(cx, padTop + chartH);
+    ctx.lineTo(cx, padTop + chartH + 4);
+    ctx.stroke();
+
+    ctx.fillStyle = "#64748b";
+    ctx.font = "9.5px monospace";
+    ctx.textAlign = "center";
+    ctx.fillText(sVal.toFixed(1), cx, padTop + chartH + 16);
+  }
+
+  ctx.fillStyle = "#334155";
+  ctx.font = "bold 11px sans-serif";
+  ctx.textAlign = "center";
+  ctx.fillText("INNE Anomaly Score (s)", padLeft + chartW / 2, height - 12);
+
+  ctx.save();
+  ctx.translate(16, padTop + chartH / 2);
+  ctx.rotate(-Math.PI / 2);
+  ctx.fillText("Flow Count (Frequency)", 0, 0);
+  ctx.restore();
+
+  ctx.fillStyle = "#6d28d9";
+  ctx.font = "bold 10.5px monospace";
+  ctx.textAlign = "left";
+  ctx.fillText(`Total Flows: ${histData.benign_total + histData.attack_total} (${histData.benign_total} Benign, ${histData.attack_total} Malicious)`, padLeft + 10, padTop + 16);
+
+  setupINNEHistTooltip(canvas, histData, toCanvasX, chartW, chartH, padLeft, padTop);
+}
+

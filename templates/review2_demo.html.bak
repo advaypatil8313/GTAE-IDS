@@ -1,0 +1,319 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GTAE-IDS â€” Review 2 Real Pipeline Demonstration</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='review2_demo.css') }}">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="header-content">
+        <div class="badge-tag">Academic Research Demonstration</div>
+        <h1>GTAE-IDS â€” Review 2 Real Pipeline Demonstration</h1>
+        <p class="subtitle">Real LSPR23 Temporal Graph Construction, Clean Graph Autoencoder Training & 113-D Anomaly Feature Extraction</p>
+      </div>
+      <div class="header-controls">
+        <button id="btn-run-full" class="btn btn-primary">
+          <span class="btn-icon">&#9658;</span> RUN FULL REVIEW-2 DEMO
+        </button>
+        <button id="btn-load-graph" class="btn btn-secondary">Load Real Graph</button>
+        <button id="btn-run-gtae" class="btn btn-secondary" disabled>Run GTAE</button>
+      </div>
+    </header>
+
+    <!-- Top Pipeline Indicator -->
+    <section class="pipeline-section">
+      <div class="pipeline-tracker">
+        <div class="pipeline-step" id="step-lspr23">
+          <div class="step-dot">1</div>
+          <div class="step-label">LSPR23 Data</div>
+        </div>
+        <div class="pipeline-arrow">&rarr;</div>
+        <div class="pipeline-step" id="step-graph">
+          <div class="step-dot">2</div>
+          <div class="step-label">5-Min Graph</div>
+        </div>
+        <div class="pipeline-arrow">&rarr;</div>
+        <div class="pipeline-step" id="step-gtae">
+          <div class="step-dot">3</div>
+          <div class="step-label">GTAE Encoder</div>
+        </div>
+        <div class="pipeline-arrow">&rarr;</div>
+        <div class="pipeline-step" id="step-latent">
+          <div class="step-dot">4</div>
+          <div class="step-label">32-D Latent</div>
+        </div>
+        <div class="pipeline-arrow">&rarr;</div>
+        <div class="pipeline-step" id="step-recon">
+          <div class="step-dot">5</div>
+          <div class="step-label">Reconstruction</div>
+        </div>
+        <div class="pipeline-arrow">&rarr;</div>
+        <div class="pipeline-step" id="step-error">
+          <div class="step-dot">6</div>
+          <div class="step-label">Error Residuals</div>
+        </div>
+        <div class="pipeline-arrow">&rarr;</div>
+        <div class="pipeline-step" id="step-features">
+          <div class="step-dot">7</div>
+          <div class="step-label">113-D Features</div>
+        </div>
+      </div>
+      <div id="status-bar" class="status-bar">
+        <span class="status-indicator ready"></span>
+        <span id="status-text">System Ready. Click "RUN FULL REVIEW-2 DEMO" or "Load Real Graph" to begin.</span>
+      </div>
+    </section>
+
+    <!-- Main Grid Content -->
+    <main class="main-grid">
+
+      <!-- SECTION 1: REAL GRAPH -->
+      <section class="card span-full" id="card-graph">
+        <div class="card-header">
+          <div class="card-title-group">
+            <span class="step-badge">STAGE 1</span>
+            <h2>1. Real LSPR23 Temporal Graph</h2>
+          </div>
+          <div class="card-explanation">
+            <strong>What is happening?</strong> Network hosts are represented as nodes and network flows as directed edges.
+          </div>
+        </div>
+
+        <div class="meta-chips-bar" id="graph-meta">
+          <div class="chip"><span>Snapshot Index:</span> <strong id="val-snap-idx">-</strong></div>
+          <div class="chip"><span>Window ID:</span> <strong id="val-win-id">-</strong></div>
+          <div class="chip"><span>Time Window:</span> <strong id="val-time-range">-</strong></div>
+          <div class="chip"><span>Hosts (Nodes):</span> <strong id="val-num-nodes">-</strong></div>
+          <div class="chip"><span>Flows (Edges):</span> <strong id="val-num-edges">-</strong></div>
+          <div class="chip"><span>Node Features:</span> <strong id="val-node-shape">-</strong></div>
+          <div class="chip"><span>Edge Features:</span> <strong id="val-edge-shape">-</strong></div>
+          <div class="chip chip-benign"><span>Benign Flows:</span> <strong id="val-benign-count">-</strong></div>
+          <div class="chip chip-attack"><span>Attack Flows:</span> <strong id="val-attack-count">-</strong></div>
+        </div>
+
+        <div class="graph-viz-container">
+          <div class="graph-canvas-wrapper">
+            <canvas id="graph-canvas" width="1000" height="520"></canvas>
+            <div id="graph-tooltip" class="tooltip"></div>
+          </div>
+          <div class="graph-legend">
+            <div class="legend-item"><span class="legend-circle node-color"></span> Host Node (Network IP)</div>
+            <div class="legend-item"><span class="legend-line benign-line"></span> Benign Network Flow</div>
+            <div class="legend-item"><span class="legend-line attack-line"></span> Malicious Network Flow</div>
+            <div class="legend-note"><em>Visualization of selected real LSPR23 graph snapshot.</em></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 2: GTAE FORWARD PASS -->
+      <section class="card span-full" id="card-gtae">
+        <div class="card-header">
+          <div class="card-title-group">
+            <span class="step-badge">STAGE 2</span>
+            <h2>2. Graph Transformer Autoencoder (GTAE) Architecture</h2>
+          </div>
+          <div class="card-explanation">
+            <strong>What is happening?</strong> The Graph Transformer learns relationships between connected hosts and their flow features.
+          </div>
+        </div>
+
+        <div class="meta-chips-bar" id="gtae-meta">
+          <div class="chip chip-cuda"><span>Device:</span> <strong id="val-device">N/A</strong></div>
+          <div class="chip chip-cuda"><span>GPU:</span> <strong id="val-gpu">N/A</strong></div>
+          <div class="chip"><span>Parameters:</span> <strong id="val-params">54,401</strong></div>
+          <div class="chip"><span>Node Input:</span> <strong>16 dimensions</strong></div>
+          <div class="chip"><span>Edge Input:</span> <strong>81 dimensions</strong></div>
+          <div class="chip"><span>Hidden Dim:</span> <strong>64 dimensions</strong></div>
+          <div class="chip"><span>Latent Dim:</span> <strong>32 dimensions</strong></div>
+        </div>
+
+        <div class="transition-flow-container">
+          <div class="flow-box">
+            <div class="flow-title">REAL INPUT GRAPH</div>
+            <div class="flow-sub">X &isin; &Ropf;<sup>91 &times; 16</sup>, E &isin; &Ropf;<sup>157 &times; 81</sup></div>
+          </div>
+          <div class="flow-arrow">&rarr;</div>
+          <div class="flow-box">
+            <div class="flow-title">TRANSFORMER CONV</div>
+            <div class="flow-sub">4 Heads &times; 16 Dim + Residuals</div>
+          </div>
+          <div class="flow-arrow">&rarr;</div>
+          <div class="flow-box">
+            <div class="flow-title">FLOW LATENT MLP</div>
+            <div class="flow-sub">[h<sub>src</sub>, h<sub>dst</sub>, edge_attr]</div>
+          </div>
+          <div class="flow-arrow">&rarr;</div>
+          <div class="flow-box highlight">
+            <div class="flow-title">32-D LATENT SPACE</div>
+            <div class="flow-sub">z<sub>e</sub> &isin; &Ropf;<sup>157 &times; 32</sup></div>
+          </div>
+          <div class="flow-arrow">&rarr;</div>
+          <div class="flow-box">
+            <div class="flow-title">EDGE DECODER</div>
+            <div class="flow-sub">MLP: 32 &rarr; 64 &rarr; 81</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 3: 32-D LATENT HEATMAP -->
+      <section class="card span-half" id="card-latent">
+        <div class="card-header">
+          <div class="card-title-group">
+            <span class="step-badge">STAGE 3</span>
+            <h2>3. Actual 32-D Latent Representation</h2>
+          </div>
+          <div class="shape-badge" id="badge-latent-shape">[157, 32]</div>
+        </div>
+        <div class="card-explanation">
+          <strong>What is happening?</strong> The GTAE encoder converts graph/flow information into a compact 32-dimensional learned representation.
+        </div>
+        <div class="heatmap-container">
+          <div class="heatmap-title">Sample of First 25 Flows &times; 32 Learned Latent Dimensions (z<sub>0</sub> to z<sub>31</sub>)</div>
+          <canvas id="latent-canvas" width="480" height="240"></canvas>
+          <div class="colorbar-wrapper">
+            <span>Low Activation</span>
+            <div class="colorbar viridis-bar"></div>
+            <span>High Activation</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 4: RECONSTRUCTION COMPARISON -->
+      <section class="card span-half" id="card-recon">
+        <div class="card-header">
+          <div class="card-title-group">
+            <span class="step-badge">STAGE 4</span>
+            <h2>4. Actual Edge Reconstruction</h2>
+          </div>
+          <div class="shape-badge" id="badge-recon-shape">[157, 81]</div>
+        </div>
+        <div class="card-explanation">
+          <strong>What is happening?</strong> The decoder attempts to reconstruct the original edge features.
+        </div>
+        <div class="recon-split-container">
+          <div class="recon-pane">
+            <div class="heatmap-title">Original Edge Features (81-D)</div>
+            <canvas id="orig-recon-canvas" width="230" height="240"></canvas>
+          </div>
+          <div class="recon-pane">
+            <div class="heatmap-title">GTAE Reconstruction (81-D)</div>
+            <canvas id="pred-recon-canvas" width="230" height="240"></canvas>
+          </div>
+        </div>
+        <div class="colorbar-wrapper">
+          <span>Min Standardized Value</span>
+          <div class="colorbar plasma-bar"></div>
+          <span>Max Standardized Value</span>
+        </div>
+      </section>
+
+      <!-- SECTION 5: RECONSTRUCTION ERROR -->
+      <section class="card span-half" id="card-error">
+        <div class="card-header">
+          <div class="card-title-group">
+            <span class="step-badge">STAGE 5</span>
+            <h2>5. Actual Reconstruction Error</h2>
+          </div>
+        </div>
+        <div class="card-explanation">
+          <strong>What is happening?</strong> The difference between original and reconstructed features provides an anomaly-related signal.
+        </div>
+
+        <div class="stats-row">
+          <div class="stat-card">
+            <div class="stat-label">Mean Error</div>
+            <div class="stat-value" id="val-mean-err">-</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Median Error</div>
+            <div class="stat-value" id="val-median-err">-</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Maximum Error</div>
+            <div class="stat-value" id="val-max-err">-</div>
+          </div>
+        </div>
+
+        <div class="hist-container">
+          <canvas id="hist-canvas" width="480" height="180"></canvas>
+          <div class="hist-legend">
+            <span class="legend-line mean-line"></span> Mean Error
+            <span class="legend-line median-line"></span> Median Error
+          </div>
+        </div>
+        <div class="alert-notice">
+          <em>Reconstruction error is an anomaly-related signal. Final anomaly classification is performed by the downstream detectors, which are not implemented yet.</em>
+        </div>
+      </section>
+
+      <!-- SECTION 6: 113-D FEATURE VECTOR -->
+      <section class="card span-half" id="card-features">
+        <div class="card-header">
+          <div class="card-title-group">
+            <span class="step-badge">STAGE 6</span>
+            <h2>6. Actual 113-D Feature Vector</h2>
+          </div>
+          <div class="shape-badge" id="badge-features-shape">[157, 113]</div>
+        </div>
+        <div class="card-explanation">
+          <strong>What is happening?</strong> 32 latent dimensions + 81 reconstruction residuals = 113 downstream features.
+        </div>
+
+        <div class="feature-split-badge-bar">
+          <div class="split-chip latent-chip">
+            <strong>Dims 1â€“32:</strong> GTAE Latent Representation (z<sub>e</sub>)
+          </div>
+          <div class="split-divider">&plus;</div>
+          <div class="split-chip residual-chip">
+            <strong>Dims 33â€“113:</strong> Reconstruction Residuals (|edge - recon|)
+          </div>
+          <div class="split-divider">&equals;</div>
+          <div class="split-chip total-chip">
+            <strong>113-D</strong> Downstream Vector
+          </div>
+        </div>
+
+        <div class="feature-bar-container">
+          <canvas id="feature-canvas" width="480" height="200"></canvas>
+        </div>
+        <div class="feature-info-footer">
+          Showing Flow #0 actual 113-dimensional values passed to downstream anomaly detectors.
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Project Guide Roadmap Footer -->
+    <footer class="app-footer">
+      <div class="roadmap-box completed">
+        <div class="roadmap-badge completed-badge">CURRENTLY COMPLETED (REVIEW 2)</div>
+        <div class="roadmap-flow">
+          <span>LSPR23 Data</span> &rarr;
+          <span>5-Min Graph</span> &rarr;
+          <span>GTAE</span> &rarr;
+          <span>Reconstruction</span> &rarr;
+          <span>113-D Features</span>
+        </div>
+      </div>
+      <div class="roadmap-box pending">
+        <div class="roadmap-badge pending-badge">NEXT STAGE (REVIEW 3)</div>
+        <div class="roadmap-flow">
+          <span>OCSVM</span> &rarr;
+          <span>Isolation Forest</span> &rarr;
+          <span>HBOS</span> &rarr;
+          <span>INNE</span> &rarr;
+          <span>Ensemble Voting</span>
+        </div>
+        <div class="roadmap-subtext">Next stage not implemented yet.</div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="{{ url_for('static', filename='review2_demo.js') }}"></script>
+</body>
+</html>
+

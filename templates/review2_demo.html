@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GTAE-IDS â€” Review 2 Real Pipeline Demonstration</title>
+  <title>GTAE-IDS — Review 2 Real Pipeline Demonstration</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='review2_demo.css') }}">
 </head>
 <body>
@@ -12,61 +12,351 @@
     <header class="app-header">
       <div class="header-content">
         <div class="badge-tag">Academic Research Demonstration</div>
-        <h1>GTAE-IDS â€” Review 2 Real Pipeline Demonstration</h1>
+        <h1>GTAE-IDS — Review 2 Real Pipeline Demonstration</h1>
         <p class="subtitle">Real LSPR23 Temporal Graph Construction, Clean Graph Autoencoder Training & 113-D Anomaly Feature Extraction</p>
       </div>
       <div class="header-controls">
         <button id="btn-run-full" class="btn btn-primary">
           <span class="btn-icon">&#9658;</span> RUN FULL REVIEW-2 DEMO
         </button>
+        <div class="snapshot-selector-wrapper">
+          <select id="snapshot-select" class="snapshot-dropdown" title="Select Snapshot to Process">
+<option value="0">Snapshot 0 (Window 0)</option>
+            <option value="1">Snapshot 1 (Window 27)</option>
+            <option value="2">Snapshot 2 (Window 49)</option>
+            <option value="3">Snapshot 3 (Window 77)</option>
+            <option value="4">Snapshot 4 (Window 105)</option>
+            <option value="5">Snapshot 5 (Window 107)</option>
+            <option value="6">Snapshot 6 (Window 129)</option>
+            <option value="7">Snapshot 7 (Window 135)</option>
+            <option value="8">Snapshot 8 (Window 160)</option>
+            <option value="9">Snapshot 9 (Window 180)</option>
+            <option value="10">Snapshot 10 (Window 181)</option>
+            <option value="11">Snapshot 11 (Window 188)</option>
+            <option value="12">Snapshot 12 (Window 213)</option>
+            <option value="13">Snapshot 13 (Window 217)</option>
+            <option value="14">Snapshot 14 (Window 220)</option>
+            <option value="15">Snapshot 15 (Window 227)</option>
+            <option value="16">Snapshot 16 (Window 234)</option>
+            <option value="17">Snapshot 17 (Window 283)</option>
+            <option value="18">Snapshot 18 (Window 287)</option>
+            <option value="19">Snapshot 19 (Window 308)</option>
+            <option value="20">Snapshot 20 (Window 312)</option>
+            <option value="21">Snapshot 21 (Window 357)</option>
+            <option value="22">Snapshot 22 (Window 358)</option>
+            <option value="23">Snapshot 23 (Window 384)</option>
+            <option value="24">Snapshot 24 (Window 442)</option>
+            <option value="25">Snapshot 25 (Window 447)</option>
+            <option value="26">Snapshot 26 (Window 482)</option>
+            <option value="27">Snapshot 27 (Window 492)</option>
+            <option value="28">Snapshot 28 (Window 507)</option>
+            <option value="29">Snapshot 29 (Window 512)</option>
+            <option value="30">Snapshot 30 (Window 514)</option>
+            <option value="31">Snapshot 31 (Window 521)</option>
+            <option value="32">Snapshot 32 (Window 522)</option>
+            <option value="33">Snapshot 33 (Window 533)</option>
+            <option value="34">Snapshot 34 (Window 561)</option>
+            <option value="35">Snapshot 35 (Window 576)</option>
+            <option value="36">Snapshot 36 (Window 579)</option>
+            <option value="37">Snapshot 37 (Window 581)</option>
+            <option value="38">Snapshot 38 (Window 585)</option>
+            <option value="39">Snapshot 39 (Window 601)</option>
+            <option value="40">Snapshot 40 (Window 630)</option>
+            <option value="41">Snapshot 41 (Window 654)</option>
+            <option value="42">Snapshot 42 (Window 662)</option>
+            <option value="43">Snapshot 43 (Window 663)</option>
+            <option value="44">Snapshot 44 (Window 688)</option>
+            <option value="45">Snapshot 45 (Window 1583)</option>
+            <option value="46" selected>Snapshot 46 (Window 1584)</option>
+            <option value="47">Snapshot 47 (Window 1585)</option>
+            <option value="48">Snapshot 48 (Window 1586)</option>
+            <option value="49">Snapshot 49 (Window 1587)</option>
+            <option value="50">Snapshot 50 (Window 1588)</option>
+            <option value="51">Snapshot 51 (Window 1589)</option>
+            <option value="52">Snapshot 52 (Window 1590)</option>
+            <option value="53">Snapshot 53 (Window 1591)</option>
+            <option value="54">Snapshot 54 (Window 1592)</option>
+            <option value="55">Snapshot 55 (Window 1593)</option>
+            <option value="56">Snapshot 56 (Window 1594)</option>
+            <option value="57">Snapshot 57 (Window 1595)</option>
+            <option value="58">Snapshot 58 (Window 1596)</option>
+            <option value="59">Snapshot 59 (Window 1597)</option>
+            <option value="60">Snapshot 60 (Window 1598)</option>
+            <option value="61">Snapshot 61 (Window 1599)</option>
+            <option value="62">Snapshot 62 (Window 1600)</option>
+            <option value="63">Snapshot 63 (Window 1601)</option>
+            <option value="64">Snapshot 64 (Window 1602)</option>
+            <option value="65">Snapshot 65 (Window 1603)</option>
+            <option value="66">Snapshot 66 (Window 1604)</option>
+            <option value="67">Snapshot 67 (Window 1605)</option>
+            <option value="68">Snapshot 68 (Window 1606)</option>
+            <option value="69">Snapshot 69 (Window 1607)</option>
+            <option value="70">Snapshot 70 (Window 1608)</option>
+            <option value="71">Snapshot 71 (Window 1609)</option>
+            <option value="72">Snapshot 72 (Window 1610)</option>
+            <option value="73">Snapshot 73 (Window 1611)</option>
+            <option value="74">Snapshot 74 (Window 1612)</option>
+            <option value="75">Snapshot 75 (Window 1613)</option>
+            <option value="76">Snapshot 76 (Window 1614)</option>
+            <option value="77">Snapshot 77 (Window 1615)</option>
+            <option value="78">Snapshot 78 (Window 1616)</option>
+            <option value="79">Snapshot 79 (Window 1617)</option>
+            <option value="80">Snapshot 80 (Window 1618)</option>
+            <option value="81">Snapshot 81 (Window 1619)</option>
+            <option value="82">Snapshot 82 (Window 1620)</option>
+            <option value="83">Snapshot 83 (Window 1621)</option>
+            <option value="84">Snapshot 84 (Window 1622)</option>
+            <option value="85">Snapshot 85 (Window 1623)</option>
+            <option value="86">Snapshot 86 (Window 1624)</option>
+            <option value="87">Snapshot 87 (Window 1625)</option>
+            <option value="88">Snapshot 88 (Window 1626)</option>
+            <option value="89">Snapshot 89 (Window 1627)</option>
+            <option value="90">Snapshot 90 (Window 1628)</option>
+            <option value="91">Snapshot 91 (Window 1629)</option>
+            <option value="92">Snapshot 92 (Window 1630)</option>
+            <option value="93">Snapshot 93 (Window 1631)</option>
+            <option value="94">Snapshot 94 (Window 1632)</option>
+            <option value="95">Snapshot 95 (Window 1633)</option>
+            <option value="96">Snapshot 96 (Window 1634)</option>
+            <option value="97">Snapshot 97 (Window 1635)</option>
+            <option value="98">Snapshot 98 (Window 1636)</option>
+            <option value="99">Snapshot 99 (Window 1637)</option>
+            <option value="100">Snapshot 100 (Window 1638)</option>
+            <option value="101">Snapshot 101 (Window 1670)</option>
+            <option value="102">Snapshot 102 (Window 1671)</option>
+            <option value="103">Snapshot 103 (Window 1672)</option>
+            <option value="104">Snapshot 104 (Window 1673)</option>
+            <option value="105">Snapshot 105 (Window 1674)</option>
+            <option value="106">Snapshot 106 (Window 1675)</option>
+            <option value="107">Snapshot 107 (Window 1676)</option>
+            <option value="108">Snapshot 108 (Window 1677)</option>
+            <option value="109">Snapshot 109 (Window 1678)</option>
+            <option value="110">Snapshot 110 (Window 1679)</option>
+            <option value="111">Snapshot 111 (Window 1680)</option>
+            <option value="112">Snapshot 112 (Window 1681)</option>
+            <option value="113">Snapshot 113 (Window 1682)</option>
+            <option value="114">Snapshot 114 (Window 1683)</option>
+            <option value="115">Snapshot 115 (Window 1684)</option>
+            <option value="116">Snapshot 116 (Window 1685)</option>
+            <option value="117">Snapshot 117 (Window 1686)</option>
+            <option value="118">Snapshot 118 (Window 1687)</option>
+            <option value="119">Snapshot 119 (Window 1688)</option>
+            <option value="120">Snapshot 120 (Window 1689)</option>
+            <option value="121">Snapshot 121 (Window 1690)</option>
+            <option value="122">Snapshot 122 (Window 1691)</option>
+            <option value="123">Snapshot 123 (Window 1692)</option>
+            <option value="124">Snapshot 124 (Window 1693)</option>
+            <option value="125">Snapshot 125 (Window 1694)</option>
+            <option value="126">Snapshot 126 (Window 1695)</option>
+            <option value="127">Snapshot 127 (Window 1696)</option>
+            <option value="128">Snapshot 128 (Window 1697)</option>
+            <option value="129">Snapshot 129 (Window 1698)</option>
+            <option value="130">Snapshot 130 (Window 1699)</option>
+            <option value="131">Snapshot 131 (Window 1700)</option>
+            <option value="132">Snapshot 132 (Window 1701)</option>
+            <option value="133">Snapshot 133 (Window 1702)</option>
+            <option value="134">Snapshot 134 (Window 1703)</option>
+            <option value="135">Snapshot 135 (Window 1704)</option>
+            <option value="136">Snapshot 136 (Window 1705)</option>
+            <option value="137">Snapshot 137 (Window 1706)</option>
+            <option value="138">Snapshot 138 (Window 1707)</option>
+            <option value="139">Snapshot 139 (Window 1708)</option>
+            <option value="140">Snapshot 140 (Window 1709)</option>
+            <option value="141">Snapshot 141 (Window 1710)</option>
+            <option value="142">Snapshot 142 (Window 1711)</option>
+            <option value="143">Snapshot 143 (Window 1712)</option>
+            <option value="144">Snapshot 144 (Window 1713)</option>
+            <option value="145">Snapshot 145 (Window 1714)</option>
+            <option value="146">Snapshot 146 (Window 1715)</option>
+            <option value="147">Snapshot 147 (Window 1716)</option>
+            <option value="148">Snapshot 148 (Window 1717)</option>
+            <option value="149">Snapshot 149 (Window 1718)</option>
+            <option value="150">Snapshot 150 (Window 1719)</option>
+            <option value="151">Snapshot 151 (Window 1720)</option>
+            <option value="152">Snapshot 152 (Window 1721)</option>
+            <option value="153">Snapshot 153 (Window 1722)</option>
+            <option value="154">Snapshot 154 (Window 1723)</option>
+            <option value="155">Snapshot 155 (Window 1724)</option>
+            <option value="156">Snapshot 156 (Window 1725)</option>
+            <option value="157">Snapshot 157 (Window 1726)</option>
+            <option value="158">Snapshot 158 (Window 1727)</option>
+            <option value="159">Snapshot 159 (Window 1728)</option>
+            <option value="160">Snapshot 160 (Window 1729)</option>
+            <option value="161">Snapshot 161 (Window 1730)</option>
+            <option value="162">Snapshot 162 (Window 1731)</option>
+            <option value="163">Snapshot 163 (Window 1732)</option>
+            <option value="164">Snapshot 164 (Window 1733)</option>
+            <option value="165">Snapshot 165 (Window 1734)</option>
+            <option value="166">Snapshot 166 (Window 1735)</option>
+            <option value="167">Snapshot 167 (Window 1736)</option>
+            <option value="168">Snapshot 168 (Window 1737)</option>
+            <option value="169">Snapshot 169 (Window 1738)</option>
+            <option value="170">Snapshot 170 (Window 1739)</option>
+            <option value="171">Snapshot 171 (Window 1740)</option>
+            <option value="172">Snapshot 172 (Window 1741)</option>
+            <option value="173">Snapshot 173 (Window 1742)</option>
+            <option value="174">Snapshot 174 (Window 1743)</option>
+            <option value="175">Snapshot 175 (Window 1744)</option>
+            <option value="176">Snapshot 176 (Window 1745)</option>
+            <option value="177">Snapshot 177 (Window 1746)</option>
+            <option value="178">Snapshot 178 (Window 1747)</option>
+            <option value="179">Snapshot 179 (Window 1748)</option>
+            <option value="180">Snapshot 180 (Window 1749)</option>
+            <option value="181">Snapshot 181 (Window 1750)</option>
+            <option value="182">Snapshot 182 (Window 1751)</option>
+            <option value="183">Snapshot 183 (Window 1752)</option>
+            <option value="184">Snapshot 184 (Window 1753)</option>
+            <option value="185">Snapshot 185 (Window 1754)</option>
+            <option value="186">Snapshot 186 (Window 1755)</option>
+            <option value="187">Snapshot 187 (Window 1756)</option>
+            <option value="188">Snapshot 188 (Window 1757)</option>
+            <option value="189">Snapshot 189 (Window 1758)</option>
+            <option value="190">Snapshot 190 (Window 1759)</option>
+            <option value="191">Snapshot 191 (Window 1760)</option>
+            <option value="192">Snapshot 192 (Window 1761)</option>
+            <option value="193">Snapshot 193 (Window 1762)</option>
+            <option value="194">Snapshot 194 (Window 1763)</option>
+            <option value="195">Snapshot 195 (Window 1764)</option>
+            <option value="196">Snapshot 196 (Window 1765)</option>
+            <option value="197">Snapshot 197 (Window 1766)</option>
+            <option value="198">Snapshot 198 (Window 1767)</option>
+            <option value="199">Snapshot 199 (Window 1768)</option>
+            <option value="200">Snapshot 200 (Window 1769)</option>
+            <option value="201">Snapshot 201 (Window 1770)</option>
+            <option value="202">Snapshot 202 (Window 1771)</option>
+            <option value="203">Snapshot 203 (Window 1772)</option>
+            <option value="204">Snapshot 204 (Window 1773)</option>
+            <option value="205">Snapshot 205 (Window 1774)</option>
+            <option value="206">Snapshot 206 (Window 1775)</option>
+            <option value="207">Snapshot 207 (Window 1776)</option>
+            <option value="208">Snapshot 208 (Window 1777)</option>
+            <option value="209">Snapshot 209 (Window 1778)</option>
+            <option value="210">Snapshot 210 (Window 1779)</option>
+            <option value="211">Snapshot 211 (Window 1780)</option>
+            <option value="212">Snapshot 212 (Window 1781)</option>
+            <option value="213">Snapshot 213 (Window 1782)</option>
+            <option value="214">Snapshot 214 (Window 1783)</option>
+            <option value="215">Snapshot 215 (Window 1784)</option>
+            <option value="216">Snapshot 216 (Window 1785)</option>
+            <option value="217">Snapshot 217 (Window 1786)</option>
+            <option value="218">Snapshot 218 (Window 1787)</option>
+            <option value="219">Snapshot 219 (Window 1788)</option>
+            <option value="220">Snapshot 220 (Window 1789)</option>
+            <option value="221">Snapshot 221 (Window 1790)</option>
+            <option value="222">Snapshot 222 (Window 1791)</option>
+            <option value="223">Snapshot 223 (Window 1792)</option>
+            <option value="224">Snapshot 224 (Window 1793)</option>
+            <option value="225">Snapshot 225 (Window 1794)</option>
+            <option value="226">Snapshot 226 (Window 1849)</option>
+            <option value="227">Snapshot 227 (Window 1850)</option>
+            <option value="228">Snapshot 228 (Window 1851)</option>
+            <option value="229">Snapshot 229 (Window 1852)</option>
+            <option value="230">Snapshot 230 (Window 1853)</option>
+            <option value="231">Snapshot 231 (Window 1854)</option>
+            <option value="232">Snapshot 232 (Window 1855)</option>
+            <option value="233">Snapshot 233 (Window 1856)</option>
+            <option value="234">Snapshot 234 (Window 1857)</option>
+            <option value="235">Snapshot 235 (Window 1858)</option>
+            <option value="236">Snapshot 236 (Window 1859)</option>
+            <option value="237">Snapshot 237 (Window 1860)</option>
+            <option value="238">Snapshot 238 (Window 1861)</option>
+            <option value="239">Snapshot 239 (Window 1862)</option>
+            <option value="240">Snapshot 240 (Window 1863)</option>
+            <option value="241">Snapshot 241 (Window 1864)</option>
+            <option value="242">Snapshot 242 (Window 1865)</option>
+            <option value="243">Snapshot 243 (Window 1866)</option>
+            <option value="244">Snapshot 244 (Window 1867)</option>
+            <option value="245">Snapshot 245 (Window 1868)</option>
+            <option value="246">Snapshot 246 (Window 1869)</option>
+            <option value="247">Snapshot 247 (Window 1870)</option>
+            <option value="248">Snapshot 248 (Window 1871)</option>
+            <option value="249">Snapshot 249 (Window 1872)</option>
+            <option value="250">Snapshot 250 (Window 1873)</option>
+            <option value="251">Snapshot 251 (Window 1874)</option>
+            <option value="252">Snapshot 252 (Window 1875)</option>
+            <option value="253">Snapshot 253 (Window 1876)</option>
+            <option value="254">Snapshot 254 (Window 1877)</option>
+            <option value="255">Snapshot 255 (Window 1878)</option>
+            <option value="256">Snapshot 256 (Window 1879)</option>
+            <option value="257">Snapshot 257 (Window 1880)</option>
+            <option value="258">Snapshot 258 (Window 1881)</option>
+            <option value="259">Snapshot 259 (Window 1882)</option>
+            <option value="260">Snapshot 260 (Window 1883)</option>
+            <option value="261">Snapshot 261 (Window 1884)</option>
+            <option value="262">Snapshot 262 (Window 1885)</option>
+            <option value="263">Snapshot 263 (Window 1886)</option>
+            <option value="264">Snapshot 264 (Window 1887)</option>
+            <option value="265">Snapshot 265 (Window 1888)</option>
+            <option value="266">Snapshot 266 (Window 1889)</option>
+            <option value="267">Snapshot 267 (Window 1890)</option>
+            <option value="268">Snapshot 268 (Window 1891)</option>
+            <option value="269">Snapshot 269 (Window 1892)</option>
+            <option value="270">Snapshot 270 (Window 1893)</option>
+            <option value="271">Snapshot 271 (Window 1894)</option>
+            <option value="272">Snapshot 272 (Window 1895)</option>
+            <option value="273">Snapshot 273 (Window 1896)</option>
+            <option value="274">Snapshot 274 (Window 1897)</option>
+            <option value="275">Snapshot 275 (Window 1898)</option>
+            <option value="276">Snapshot 276 (Window 1899)</option>
+            <option value="277">Snapshot 277 (Window 1900)</option>
+            <option value="278">Snapshot 278 (Window 1901)</option>
+            <option value="279">Snapshot 279 (Window 1902)</option>
+            <option value="280">Snapshot 280 (Window 1903)</option>
+            <option value="281">Snapshot 281 (Window 1904)</option>
+            <option value="282">Snapshot 282 (Window 1905)</option>
+            <option value="283">Snapshot 283 (Window 1906)</option>
+            <option value="284">Snapshot 284 (Window 1907)</option>
+            <option value="285">Snapshot 285 (Window 1908)</option>
+            <option value="286">Snapshot 286 (Window 1909)</option>
+            <option value="287">Snapshot 287 (Window 1910)</option>
+            <option value="288">Snapshot 288 (Window 1911)</option>
+            <option value="289">Snapshot 289 (Window 1912)</option>
+            <option value="290">Snapshot 290 (Window 1913)</option>
+            <option value="291">Snapshot 291 (Window 1915)</option>
+            <option value="292">Snapshot 292 (Window 1916)</option>
+            <option value="293">Snapshot 293 (Window 1917)</option>
+            <option value="294">Snapshot 294 (Window 1918)</option>
+            <option value="295">Snapshot 295 (Window 1919)</option>
+            <option value="296">Snapshot 296 (Window 1920)</option>
+            <option value="297">Snapshot 297 (Window 1921)</option>
+          </select>
+        </div>
+        <button id="btn-process-snapshot" class="btn btn-primary">Process Snapshot</button>
         <button id="btn-load-graph" class="btn btn-secondary">Load Real Graph</button>
         <button id="btn-run-gtae" class="btn btn-secondary" disabled>Run GTAE</button>
       </div>
     </header>
 
-    <!-- Top Pipeline Indicator -->
-    <section class="pipeline-section">
-      <div class="pipeline-tracker">
-        <div class="pipeline-step" id="step-lspr23">
-          <div class="step-dot">1</div>
-          <div class="step-label">LSPR23 Data</div>
-        </div>
-        <div class="pipeline-arrow">&rarr;</div>
-        <div class="pipeline-step" id="step-graph">
-          <div class="step-dot">2</div>
-          <div class="step-label">5-Min Graph</div>
-        </div>
-        <div class="pipeline-arrow">&rarr;</div>
-        <div class="pipeline-step" id="step-gtae">
-          <div class="step-dot">3</div>
-          <div class="step-label">GTAE Encoder</div>
-        </div>
-        <div class="pipeline-arrow">&rarr;</div>
-        <div class="pipeline-step" id="step-latent">
-          <div class="step-dot">4</div>
-          <div class="step-label">32-D Latent</div>
-        </div>
-        <div class="pipeline-arrow">&rarr;</div>
-        <div class="pipeline-step" id="step-recon">
-          <div class="step-dot">5</div>
-          <div class="step-label">Reconstruction</div>
-        </div>
-        <div class="pipeline-arrow">&rarr;</div>
-        <div class="pipeline-step" id="step-error">
-          <div class="step-dot">6</div>
-          <div class="step-label">Error Residuals</div>
-        </div>
-        <div class="pipeline-arrow">&rarr;</div>
-        <div class="pipeline-step" id="step-features">
-          <div class="step-dot">7</div>
-          <div class="step-label">113-D Features</div>
-        </div>
+        <!-- Top Pipeline Indicator -->
+    <div class="pipeline-card">
+      <div class="pipeline-title">Pipeline:</div>
+      <div class="pipeline-track">
+        <div class="pipe-box" id="step-lspr23">1 LSPR23 Data</div>
+        <div class="pipe-arrow">&rarr;</div>
+        <div class="pipe-box" id="step-graph">2 5-Min Graph</div>
+        <div class="pipe-arrow">&rarr;</div>
+        <div class="pipe-box" id="step-gtae">3 GTAE Encoder</div>
+        <div class="pipe-arrow">&rarr;</div>
+        <div class="pipe-box" id="step-latent">4 32-D Latent</div>
+        <div class="pipe-arrow">&rarr;</div>
+        <div class="pipe-box" id="step-recon">5 Reconstruction</div>
+        <div class="pipe-arrow">&rarr;</div>
+        <div class="pipe-box" id="step-error">6 Error Residuals</div>
+        <div class="pipe-arrow">&rarr;</div>
+        <div class="pipe-box" id="step-features">7 113-D Features</div>
+        <div class="pipe-arrow">&rarr;</div>
+        <div class="pipe-box" id="step-ocsvm">8 OCSVM</div>
+        <div class="pipe-arrow">&rarr;</div>
+        <div class="pipe-box" id="step-iforest">9 Isolation Forest</div>
+        <div class="pipe-arrow">&rarr;</div>
+        <div class="pipe-box" id="step-hbos">10 HBOS</div>
+        <div class="pipe-arrow">&rarr;</div>
+        <div class="pipe-box" id="step-inne">11 INNE</div>
       </div>
-      <div id="status-bar" class="status-bar">
-        <span class="status-indicator ready"></span>
-        <span id="status-text">System Ready. Click "RUN FULL REVIEW-2 DEMO" or "Load Real Graph" to begin.</span>
+      <div class="status-row" id="status-bar">
+        Status: <strong id="status-text">System Ready. Click "RUN FULL REVIEW-2 DEMO" or "Load Real Graph" to begin.</strong>
       </div>
-    </section>
+    </div>
 
     <!-- Main Grid Content -->
     <main class="main-grid">
@@ -75,28 +365,28 @@
       <section class="card span-full" id="card-graph">
         <div class="card-header">
           <div class="card-title-group">
-            <span class="step-badge">STAGE 1</span>
+            <span class="shape-indicator">STAGE 1</span>
             <h2>1. Real LSPR23 Temporal Graph</h2>
           </div>
           <div class="card-explanation">
-            <strong>What is happening?</strong> Network hosts are represented as nodes and network flows as directed edges.
+            <strong class="meta-val">What is happening?</strong> Network hosts are represented as nodes and network flows as directed edges.
           </div>
         </div>
 
-        <div class="meta-chips-bar" id="graph-meta">
-          <div class="chip"><span>Snapshot Index:</span> <strong id="val-snap-idx">-</strong></div>
-          <div class="chip"><span>Window ID:</span> <strong id="val-win-id">-</strong></div>
-          <div class="chip"><span>Time Window:</span> <strong id="val-time-range">-</strong></div>
-          <div class="chip"><span>Hosts (Nodes):</span> <strong id="val-num-nodes">-</strong></div>
-          <div class="chip"><span>Flows (Edges):</span> <strong id="val-num-edges">-</strong></div>
-          <div class="chip"><span>Node Features:</span> <strong id="val-node-shape">-</strong></div>
-          <div class="chip"><span>Edge Features:</span> <strong id="val-edge-shape">-</strong></div>
-          <div class="chip chip-benign"><span>Benign Flows:</span> <strong id="val-benign-count">-</strong></div>
-          <div class="chip chip-attack"><span>Attack Flows:</span> <strong id="val-attack-count">-</strong></div>
+        <div class="meta-table-grid" id="graph-meta">
+          <div class="meta-item"><span class="meta-label">Snapshot Index:</span> <strong id="val-snap-idx" class="meta-val">-</strong></div>
+          <div class="meta-item"><span class="meta-label">Window ID:</span> <strong id="val-win-id" class="meta-val">-</strong></div>
+          <div class="meta-item"><span class="meta-label">Time Window:</span> <strong id="val-time-range" class="meta-val">-</strong></div>
+          <div class="meta-item"><span class="meta-label">Hosts (Nodes):</span> <strong id="val-num-nodes" class="meta-val">-</strong></div>
+          <div class="meta-item"><span class="meta-label">Flows (Edges):</span> <strong id="val-num-edges" class="meta-val">-</strong></div>
+          <div class="meta-item"><span class="meta-label">Node Features:</span> <strong id="val-node-shape" class="meta-val">-</strong></div>
+          <div class="meta-item"><span class="meta-label">Edge Features:</span> <strong id="val-edge-shape" class="meta-val">-</strong></div>
+          <div class="chip chip-benign"><span>Benign Flows:</span> <strong id="val-benign-count" class="meta-val">-</strong></div>
+          <div class="chip chip-attack"><span>Attack Flows:</span> <strong id="val-attack-count" class="meta-val">-</strong></div>
         </div>
 
-        <div class="graph-viz-container">
-          <div class="graph-canvas-wrapper">
+        <div class="graph-wrapper">
+          <div class="canvas-box">
             <canvas id="graph-canvas" width="1000" height="520"></canvas>
             <div id="graph-tooltip" class="tooltip"></div>
           </div>
@@ -113,22 +403,22 @@
       <section class="card span-full" id="card-gtae">
         <div class="card-header">
           <div class="card-title-group">
-            <span class="step-badge">STAGE 2</span>
+            <span class="shape-indicator">STAGE 2</span>
             <h2>2. Graph Transformer Autoencoder (GTAE) Architecture</h2>
           </div>
           <div class="card-explanation">
-            <strong>What is happening?</strong> The Graph Transformer learns relationships between connected hosts and their flow features.
+            <strong class="meta-val">What is happening?</strong> The Graph Transformer learns relationships between connected hosts and their flow features.
           </div>
         </div>
 
-        <div class="meta-chips-bar" id="gtae-meta">
-          <div class="chip chip-cuda"><span>Device:</span> <strong id="val-device">N/A</strong></div>
-          <div class="chip chip-cuda"><span>GPU:</span> <strong id="val-gpu">N/A</strong></div>
-          <div class="chip"><span>Parameters:</span> <strong id="val-params">54,401</strong></div>
-          <div class="chip"><span>Node Input:</span> <strong>16 dimensions</strong></div>
-          <div class="chip"><span>Edge Input:</span> <strong>81 dimensions</strong></div>
-          <div class="chip"><span>Hidden Dim:</span> <strong>64 dimensions</strong></div>
-          <div class="chip"><span>Latent Dim:</span> <strong>32 dimensions</strong></div>
+        <div class="meta-table-grid" id="gtae-meta">
+          <div class="chip chip-cuda"><span>Device:</span> <strong id="val-device" class="meta-val">N/A</strong></div>
+          <div class="chip chip-cuda"><span>GPU:</span> <strong id="val-gpu" class="meta-val">N/A</strong></div>
+          <div class="meta-item"><span class="meta-label">Parameters:</span> <strong id="val-params" class="meta-val">54,401</strong></div>
+          <div class="meta-item"><span class="meta-label">Node Input:</span> <strong class="meta-val">16 dimensions</strong></div>
+          <div class="meta-item"><span class="meta-label">Edge Input:</span> <strong class="meta-val">81 dimensions</strong></div>
+          <div class="meta-item"><span class="meta-label">Hidden Dim:</span> <strong class="meta-val">64 dimensions</strong></div>
+          <div class="meta-item"><span class="meta-label">Latent Dim:</span> <strong class="meta-val">32 dimensions</strong></div>
         </div>
 
         <div class="transition-flow-container">
@@ -163,13 +453,13 @@
       <section class="card span-half" id="card-latent">
         <div class="card-header">
           <div class="card-title-group">
-            <span class="step-badge">STAGE 3</span>
+            <span class="shape-indicator">STAGE 3</span>
             <h2>3. Actual 32-D Latent Representation</h2>
           </div>
-          <div class="shape-badge" id="badge-latent-shape">[157, 32]</div>
+          <div class="shape-indicator" id="badge-latent-shape">[157, 32]</div>
         </div>
         <div class="card-explanation">
-          <strong>What is happening?</strong> The GTAE encoder converts graph/flow information into a compact 32-dimensional learned representation.
+          <strong class="meta-val">What is happening?</strong> The GTAE encoder converts graph/flow information into a compact 32-dimensional learned representation.
         </div>
         <div class="heatmap-container">
           <div class="heatmap-title">Sample of First 25 Flows &times; 32 Learned Latent Dimensions (z<sub>0</sub> to z<sub>31</sub>)</div>
@@ -186,13 +476,13 @@
       <section class="card span-half" id="card-recon">
         <div class="card-header">
           <div class="card-title-group">
-            <span class="step-badge">STAGE 4</span>
+            <span class="shape-indicator">STAGE 4</span>
             <h2>4. Actual Edge Reconstruction</h2>
           </div>
-          <div class="shape-badge" id="badge-recon-shape">[157, 81]</div>
+          <div class="shape-indicator" id="badge-recon-shape">[157, 81]</div>
         </div>
         <div class="card-explanation">
-          <strong>What is happening?</strong> The decoder attempts to reconstruct the original edge features.
+          <strong class="meta-val">What is happening?</strong> The decoder attempts to reconstruct the original edge features.
         </div>
         <div class="recon-split-container">
           <div class="recon-pane">
@@ -215,26 +505,26 @@
       <section class="card span-half" id="card-error">
         <div class="card-header">
           <div class="card-title-group">
-            <span class="step-badge">STAGE 5</span>
+            <span class="shape-indicator">STAGE 5</span>
             <h2>5. Actual Reconstruction Error</h2>
           </div>
         </div>
         <div class="card-explanation">
-          <strong>What is happening?</strong> The difference between original and reconstructed features provides an anomaly-related signal.
+          <strong class="meta-val">What is happening?</strong> The difference between original and reconstructed features provides an anomaly-related signal.
         </div>
 
-        <div class="stats-row">
-          <div class="stat-card">
-            <div class="stat-label">Mean Error</div>
-            <div class="stat-value" id="val-mean-err">-</div>
+        <div class="ocsvm-metrics-grid">
+          <div class="metric-card">
+            <div class="metric-lbl">Mean Error</div>
+            <div class="metric-val" id="val-mean-err">-</div>
           </div>
-          <div class="stat-card">
-            <div class="stat-label">Median Error</div>
-            <div class="stat-value" id="val-median-err">-</div>
+          <div class="metric-card">
+            <div class="metric-lbl">Median Error</div>
+            <div class="metric-val" id="val-median-err">-</div>
           </div>
-          <div class="stat-card">
-            <div class="stat-label">Maximum Error</div>
-            <div class="stat-value" id="val-max-err">-</div>
+          <div class="metric-card">
+            <div class="metric-lbl">Maximum Error</div>
+            <div class="metric-val" id="val-max-err">-</div>
           </div>
         </div>
 
@@ -254,26 +544,26 @@
       <section class="card span-half" id="card-features">
         <div class="card-header">
           <div class="card-title-group">
-            <span class="step-badge">STAGE 6</span>
+            <span class="shape-indicator">STAGE 6</span>
             <h2>6. Actual 113-D Feature Vector</h2>
           </div>
-          <div class="shape-badge" id="badge-features-shape">[157, 113]</div>
+          <div class="shape-indicator" id="badge-features-shape">[157, 113]</div>
         </div>
         <div class="card-explanation">
-          <strong>What is happening?</strong> 32 latent dimensions + 81 reconstruction residuals = 113 downstream features.
+          <strong class="meta-val">What is happening?</strong> 32 latent dimensions + 81 reconstruction residuals = 113 downstream features.
         </div>
 
         <div class="feature-split-badge-bar">
           <div class="split-chip latent-chip">
-            <strong>Dims 1â€“32:</strong> GTAE Latent Representation (z<sub>e</sub>)
+            <strong class="meta-val">Dims 1–32:</strong> GTAE Latent Representation (z<sub>e</sub>)
           </div>
           <div class="split-divider">&plus;</div>
           <div class="split-chip residual-chip">
-            <strong>Dims 33â€“113:</strong> Reconstruction Residuals (|edge - recon|)
+            <strong class="meta-val">Dims 33–113:</strong> Reconstruction Residuals (|edge - recon|)
           </div>
           <div class="split-divider">&equals;</div>
           <div class="split-chip total-chip">
-            <strong>113-D</strong> Downstream Vector
+            <strong class="meta-val">113-D</strong> Downstream Vector
           </div>
         </div>
 
@@ -285,27 +575,247 @@
         </div>
       </section>
 
+      <!-- SECTION 8: OCSVM -->
+      <section class="card span-full" id="card-ocsvm">
+        <div class="card-header">
+          <div class="card-title-group">
+            <span class="shape-indicator">STAGE 8</span>
+            <h2>8. One-Class SVM Detection</h2>
+          </div>
+          <div style="display:flex; gap:8px;">
+            <div class="shape-indicator" id="badge-ocsvm-provenance">Snapshot -</div>
+            <div class="shape-indicator badge-thresh" id="badge-ocsvm-thresh">τ* = -</div>
+          </div>
+        </div>
+        <div class="card-explanation">
+          <strong>What is happening?</strong> The One-Class SVM detector identifies anomalies in the 113-D feature space.
+        </div>
+
+        <div class="meta-table-grid">
+          <div class="meta-item"><span class="meta-label">Snap Idx:</span> <strong id="summary-snap-idx" class="meta-val">-</strong></div>
+          <div class="meta-item"><span class="meta-label">Total Flows:</span> <strong id="summary-total-flows" class="meta-val">-</strong></div>
+          <div class="meta-item"><span class="meta-label">Benign:</span> <strong id="summary-benign-flows" class="meta-val">-</strong></div>
+          <div class="meta-item"><span class="meta-label">Attack:</span> <strong id="summary-attack-flows" class="meta-val">-</strong></div>
+          <div class="meta-item chip-attack"><span class="meta-label">Detected Anomalies:</span> <strong id="summary-detected-flows" class="meta-val">-</strong></div>
+          <div class="meta-item chip-tp"><span class="meta-label">True Positives:</span> <strong id="summary-tp" class="meta-val">-</strong></div>
+          <div class="meta-item chip-fp"><span class="meta-label">False Alarms:</span> <strong id="summary-fp" class="meta-val">-</strong></div>
+        </div>
+
+        <div class="ocsvm-metrics-grid">
+          <div class="metric-card"><div class="metric-lbl">Precision</div><div class="metric-val" id="val-ocsvm-prec">-</div></div>
+          <div class="metric-card"><div class="metric-lbl">Recall</div><div class="metric-val" id="val-ocsvm-rec">-</div></div>
+          <div class="metric-card"><div class="metric-lbl">F1-Score</div><div class="metric-val" id="val-ocsvm-f1">-</div></div>
+          <div class="metric-card"><div class="metric-lbl">FPR</div><div class="metric-val" id="val-ocsvm-fpr">-</div></div>
+        </div>
+
+        <div class="graph-wrapper">
+          <div class="canvas-box">
+            <canvas id="ocsvm-boundary-canvas" width="1000" height="500"></canvas>
+            <div id="boundary-tooltip" class="tooltip"></div>
+          </div>
+        </div>
+
+        <div style="margin-top:20px;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Rank</th><th>Edge ID</th><th>Src IP</th><th>Dst IP</th><th>Timestamp</th><th>Recon Error</th><th>Anomaly Score</th><th>Truth</th><th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-detected-flows">
+              <tr><td colspan="9">Select a snapshot to process.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- SECTION 9: Isolation Forest -->
+      <section class="card span-full" id="card-iforest">
+        <div class="card-header">
+          <div class="card-title-group">
+            <span class="shape-indicator">STAGE 9</span>
+            <h2>9. Isolation Forest Detection</h2>
+          </div>
+          <div style="display:flex; gap:8px;">
+            <div class="shape-indicator" id="badge-iforest-provenance">Snapshot -</div>
+            <div class="shape-indicator badge-thresh" id="badge-iforest-thresh">τ* = -</div>
+            <div class="shape-indicator badge-var" id="badge-iforest-pca-variance">PC1: -% | PC2: -% Var</div>
+          </div>
+        </div>
+        <div class="card-explanation">
+          <strong>What is happening?</strong> Isolation Forest constructs trees to isolate anomalies in the feature space.
+        </div>
+
+        <div class="meta-table-grid">
+          <div class="meta-item"><span class="meta-label">Snap Idx:</span> <strong id="summary-iforest-snap-idx" class="meta-val">-</strong></div>
+          <div class="meta-item"><span class="meta-label">Total Flows:</span> <strong id="summary-iforest-total-flows" class="meta-val">-</strong></div>
+          <div class="meta-item"><span class="meta-label">Benign:</span> <strong id="summary-iforest-benign-flows" class="meta-val">-</strong></div>
+          <div class="meta-item"><span class="meta-label">Attack:</span> <strong id="summary-iforest-attack-flows" class="meta-val">-</strong></div>
+          <div class="meta-item chip-attack"><span class="meta-label">Detected Anomalies:</span> <strong id="summary-iforest-detected-flows" class="meta-val">-</strong></div>
+          <div class="meta-item chip-tp"><span class="meta-label">True Positives:</span> <strong id="summary-iforest-tp" class="meta-val">-</strong></div>
+          <div class="meta-item chip-fp"><span class="meta-label">False Alarms:</span> <strong id="summary-iforest-fp" class="meta-val">-</strong></div>
+        </div>
+
+        <div class="ocsvm-metrics-grid">
+          <div class="metric-card"><div class="metric-lbl">Precision</div><div class="metric-val" id="val-iforest-prec">-</div></div>
+          <div class="metric-card"><div class="metric-lbl">Recall</div><div class="metric-val" id="val-iforest-rec">-</div></div>
+          <div class="metric-card"><div class="metric-lbl">F1-Score</div><div class="metric-val" id="val-iforest-f1">-</div></div>
+          <div class="metric-card"><div class="metric-lbl">FPR</div><div class="metric-val" id="val-iforest-fpr">-</div></div>
+        </div>
+
+        <div class="graph-wrapper">
+          <div class="canvas-box">
+            <canvas id="iforest-pca-canvas" width="1000" height="500"></canvas>
+            <div id="iforest-tooltip" class="tooltip"></div>
+          </div>
+        </div>
+
+        <div style="margin-top:20px;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Rank</th><th>Edge ID</th><th>Src IP</th><th>Dst IP</th><th>Timestamp</th><th>Recon Error</th><th>Anomaly Score</th><th>Truth</th><th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-iforest-flows">
+              <tr><td colspan="9">Select a snapshot to process.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- SECTION 10: HBOS -->
+      <section class="card span-full" id="card-hbos">
+        <div class="card-header">
+          <div class="card-title-group">
+            <span class="shape-indicator">STAGE 10</span>
+            <h2>10. Histogram-Based Outlier Score (HBOS)</h2>
+          </div>
+          <div style="display:flex; gap:8px;">
+            <div class="shape-indicator" id="badge-hbos-provenance">Snapshot -</div>
+            <div class="shape-indicator badge-thresh" id="badge-hbos-thresh">τ* = -</div>
+          </div>
+        </div>
+        <div class="card-explanation">
+          <strong>What is happening?</strong> HBOS scores anomalies based on histograms of individual feature distributions.
+        </div>
+
+        <div class="meta-table-grid">
+          <div class="meta-item"><span class="meta-label">Snap Idx:</span> <strong id="summary-hbos-snap-idx" class="meta-val">-</strong></div>
+          <div class="meta-item"><span class="meta-label">Total Flows:</span> <strong id="summary-hbos-total-flows" class="meta-val">-</strong></div>
+          <div class="meta-item"><span class="meta-label">Benign:</span> <strong id="summary-hbos-benign-flows" class="meta-val">-</strong></div>
+          <div class="meta-item"><span class="meta-label">Attack:</span> <strong id="summary-hbos-attack-flows" class="meta-val">-</strong></div>
+          <div class="meta-item chip-attack"><span class="meta-label">Detected Anomalies:</span> <strong id="summary-hbos-detected-flows" class="meta-val">-</strong></div>
+          <div class="meta-item chip-tp"><span class="meta-label">True Positives:</span> <strong id="summary-hbos-tp" class="meta-val">-</strong></div>
+          <div class="meta-item chip-fp"><span class="meta-label">False Alarms:</span> <strong id="summary-hbos-fp" class="meta-val">-</strong></div>
+        </div>
+
+        <div class="ocsvm-metrics-grid">
+          <div class="metric-card"><div class="metric-lbl">Precision</div><div class="metric-val" id="val-hbos-prec">-</div></div>
+          <div class="metric-card"><div class="metric-lbl">Recall</div><div class="metric-val" id="val-hbos-rec">-</div></div>
+          <div class="metric-card"><div class="metric-lbl">F1-Score</div><div class="metric-val" id="val-hbos-f1">-</div></div>
+          <div class="metric-card"><div class="metric-lbl">FPR</div><div class="metric-val" id="val-hbos-fpr">-</div></div>
+        </div>
+
+        <div class="graph-wrapper">
+          <div class="canvas-box">
+            <canvas id="hbos-hist-canvas" width="1000" height="500"></canvas>
+            <div id="hbos-tooltip" class="tooltip"></div>
+          </div>
+        </div>
+
+        <div style="margin-top:20px;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Rank</th><th>Edge ID</th><th>Src IP</th><th>Dst IP</th><th>Timestamp</th><th>Recon Error</th><th>Anomaly Score</th><th>Truth</th><th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-hbos-flows">
+              <tr><td colspan="9">Select a snapshot to process.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- SECTION 11: INNE -->
+      <section class="card span-full" id="card-inne">
+        <div class="card-header">
+          <div class="card-title-group">
+            <span class="shape-indicator">STAGE 11</span>
+            <h2>11. INNE Detection</h2>
+          </div>
+          <div style="display:flex; gap:8px;">
+            <div class="shape-indicator" id="badge-inne-provenance">Snapshot -</div>
+            <div class="shape-indicator badge-thresh" id="badge-inne-thresh">τ* = -</div>
+            <div class="shape-indicator badge-var" id="badge-inne-pca-variance">PC1: -% | PC2: -% Var</div>
+          </div>
+        </div>
+        <div class="card-explanation">
+          <strong>What is happening?</strong> Isolation using Nearest Neighbor Ensemble constructs hyperspheres to isolate anomalies.
+        </div>
+
+        <div class="meta-table-grid">
+          <div class="meta-item"><span class="meta-label">Snap Idx:</span> <strong id="summary-inne-snap-idx" class="meta-val">-</strong></div>
+          <div class="meta-item"><span class="meta-label">Total Flows:</span> <strong id="summary-inne-total-flows" class="meta-val">-</strong></div>
+          <div class="meta-item"><span class="meta-label">Benign:</span> <strong id="summary-inne-benign-flows" class="meta-val">-</strong></div>
+          <div class="meta-item"><span class="meta-label">Attack:</span> <strong id="summary-inne-attack-flows" class="meta-val">-</strong></div>
+          <div class="meta-item chip-attack"><span class="meta-label">Detected Anomalies:</span> <strong id="summary-inne-detected-flows" class="meta-val">-</strong></div>
+          <div class="meta-item chip-tp"><span class="meta-label">True Positives:</span> <strong id="summary-inne-tp" class="meta-val">-</strong></div>
+          <div class="meta-item chip-fp"><span class="meta-label">False Alarms:</span> <strong id="summary-inne-fp" class="meta-val">-</strong></div>
+        </div>
+
+        <div class="ocsvm-metrics-grid">
+          <div class="metric-card"><div class="metric-lbl">Precision</div><div class="metric-val" id="val-inne-prec">-</div></div>
+          <div class="metric-card"><div class="metric-lbl">Recall</div><div class="metric-val" id="val-inne-rec">-</div></div>
+          <div class="metric-card"><div class="metric-lbl">F1-Score</div><div class="metric-val" id="val-inne-f1">-</div></div>
+          <div class="metric-card"><div class="metric-lbl">FPR</div><div class="metric-val" id="val-inne-fpr">-</div></div>
+        </div>
+
+        <div class="graph-wrapper">
+          <div class="canvas-box">
+            <canvas id="inne-pca-canvas" width="1000" height="500"></canvas>
+            <div id="inne-tooltip" class="tooltip"></div>
+          </div>
+        </div>
+
+
+
+        <div style="margin-top:20px;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Rank</th><th>Edge ID</th><th>Src IP</th><th>Dst IP</th><th>Timestamp</th><th>Recon Error</th><th>Anomaly Score</th><th>Truth</th><th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-inne-flows">
+              <tr><td colspan="9">Select a snapshot to process.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
     </main>
 
     <!-- Project Guide Roadmap Footer -->
     <footer class="app-footer">
       <div class="roadmap-box completed">
-        <div class="roadmap-badge completed-badge">CURRENTLY COMPLETED (REVIEW 2)</div>
+        <div class="roadmap-badge completed-badge">CURRENTLY COMPLETED (REVIEW 3)</div>
         <div class="roadmap-flow">
           <span>LSPR23 Data</span> &rarr;
           <span>5-Min Graph</span> &rarr;
           <span>GTAE</span> &rarr;
           <span>Reconstruction</span> &rarr;
-          <span>113-D Features</span>
-        </div>
-      </div>
-      <div class="roadmap-box pending">
-        <div class="roadmap-badge pending-badge">NEXT STAGE (REVIEW 3)</div>
-        <div class="roadmap-flow">
+          <span>113-D Features</span> &rarr;
           <span>OCSVM</span> &rarr;
           <span>Isolation Forest</span> &rarr;
           <span>HBOS</span> &rarr;
-          <span>INNE</span> &rarr;
+          <span>INNE</span>
+        </div>
+      </div>
+      <div class="roadmap-box pending">
+        <div class="roadmap-badge pending-badge">NEXT STAGE</div>
+        <div class="roadmap-flow">
           <span>Ensemble Voting</span>
         </div>
         <div class="roadmap-subtext">Next stage not implemented yet.</div>
